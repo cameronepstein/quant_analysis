@@ -6,6 +6,9 @@ $equity_securities = [
 ];
 // Run api requests for each security
 foreach($equity_securities as $security => $api_function) {
-  print_r(requestAVAPI($security, $api_function));
+  $res["security"] = $security;
+  $res["data_type"] = $api_function;
+  $res["data"] = requestAVAPI($security, $api_function);
+  print_r($res["data"]);
 }
 ?>
