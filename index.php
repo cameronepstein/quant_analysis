@@ -1,6 +1,11 @@
 <?php
-include(dirname(__FILE__) . "/config.php");
-$url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&apikey=".$alpha_vantage_key;
-$data = file_get_contents($url);
-print_r($data);
+include(dirname(__FILE__) . "/alphaVantage/index.php");
+// ADD desired securities and Alpha Vantage API functions here:
+$equity_securities = [
+  "MSFT" => "TIME_SERIES_INTRADAY"
+];
+// Run api requests for each security
+foreach($equity_securities as $security => $api_function) {
+  print_r(requestAVAPI($security, $api_function));
+}
 ?>

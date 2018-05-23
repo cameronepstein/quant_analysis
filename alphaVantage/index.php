@@ -1,0 +1,8 @@
+<?php
+function requestAVApi($security, $api_function) {
+  include(dirname(__FILE__) . "/../config.php");
+  $url = "https://www.alphavantage.co/query?function=".$api_function."&symbol=".$security."&interval=1min&apikey=".$alpha_vantage_key;
+  $data = file_get_contents($url);
+  return $data;
+}
+?>
