@@ -10,8 +10,9 @@ function formatTimeSeriesIntradayData($data) {
   $res = '';
   $php_formatted_data = json_decode($data, true);
   foreach($php_formatted_data['Time Series (1min)'] as $recorded_time_key=>$values) {
-    $res .= '('.$php_formatted_data['Meta Data']['2. Symbol'].', '.$php_formatted_data['Meta Data']['3. Last Refreshed'].', '.$php_formatted_data['Meta Data']['6. Time Zone'].', '.$recorded_time_key.', '.$values['1. open'].', '.$values['2. high'].', '.$values['3. low'].', '.$values['4. close'].', '.$values['5. volume'].')';
+    $res .= '(\''.$php_formatted_data['Meta Data']['2. Symbol'].'\', \''.$php_formatted_data['Meta Data']['3. Last Refreshed'].'\', \''.$php_formatted_data['Meta Data']['6. Time Zone'].'\', \''.$recorded_time_key.'\', '.$values['1. open'].', '.$values['2. high'].', '.$values['3. low'].', '.$values['4. close'].', '.$values['5. volume'].'), ';
   }
-  return $res;
+  $trimmed_res = rtrim($res,', ');
+  return $trimmed_res;
 }
 ?>

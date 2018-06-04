@@ -1,6 +1,7 @@
 <?php
 include(dirname(__FILE__) . '/alphaVantage/index.php');
 include(dirname(__FILE__) . '/db/dbCreator.php');
+include(dirname(__FILE__) . '/db/insert.php');
 include(dirname(__FILE__) . '/dataFormatter/dataFormatter.php');
 
 // Set up project db
@@ -19,6 +20,8 @@ foreach($equity_securities as $security => $api_params) {
   $res['data_type'] = $api_params['function'];
   $res['output_size'] = $api_params['outputsize'];
   $res['data'] = requestAVAPI($security, $api_params);
+  // print_r($res['data']);
   $res['csv_formatted_data'] = formatData($res);
+  insertToDb($res);
 }
 ?>
