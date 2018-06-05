@@ -11,7 +11,7 @@ include(dirname(__FILE__) . '/dataFormatter/dataFormatter.php');
 $equity_securities = [
   'MSFT' => [
     'function' => 'TIME_SERIES_INTRADAY',
-    'outputsize' => 'compact',
+    'outputsize' => 'full',
   ],
 ];
 // Run api requests for each security
