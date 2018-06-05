@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 function insertToDb($data) {
   include(dirname(__FILE__) . '/../config.php');
-  include(dirname(__FILE__) . '/queryGenerator.php');
+  include_once(dirname(__FILE__) . '/queryGenerator.php');
   $link = $doj_db_con;
   $schema_name = 'c_test';
   /* check connection */

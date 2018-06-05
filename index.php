@@ -13,6 +13,12 @@ $equity_securities = [
     'function' => 'TIME_SERIES_INTRADAY',
     'outputsize' => 'full',
   ],
+  'MSFT' => [
+    'function' => 'SMA',
+    'outputsize' => 'full',
+    'time_period' => '10',
+    'series_type' => 'close', // can be open, close, high or low
+  ]
 ];
 // Run api requests for each security
 foreach($equity_securities as $security => $api_params) {
