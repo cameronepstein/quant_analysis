@@ -2,13 +2,14 @@
 function formatData($av_data) {
   if($av_data['data_type'] === 'TIME_SERIES_INTRADAY') {
     $res = formatTimeSeriesIntradayData($av_data['data']);
-  } else if ($av_data['data_type'] === 'SMA' ) {
-    $res = formatSimpleMovingAverageData($av_data['data']);
+  } else if ($av_data['data_type'] === 'SMA' || $av_data['data_type'] === 'EMA') {
+    $res = formatMovingAverageData($av_data);
   }
   return $res;
 }
 
 function formatTimeSeriesIntradayData($data) {
+  $res = '';
   $php_formatted_data = json_decode($data, true);
   foreach($php_formatted_data['Time Series (1min)'] as $recorded_time_key=>$values) {
     $res .= '(\''.$php_formatted_data['Meta Data']['2. Symbol'].'\', \''.$php_formatted_data['Meta Data']['3. Last Refreshed'].'\', \''.$php_formatted_data['Meta Data']['6. Time Zone'].'\', \''.$recorded_time_key.'\', '.$values['1. open'].', '.$values['2. high'].', '.$values['3. low'].', '.$values['4. close'].', '.$values['5. volume'].'), ';
@@ -17,9 +18,10 @@ function formatTimeSeriesIntradayData($data) {
   return $trimmed_res;
 }
 
-function formatSimpleMovingAverageData($data) {
-  $php_formatted_data = json_decode($data, true);
-  foreach($php_formatted_data['Technical Analysis: SMA'] as $recorded_time_key=>$values) {
+function formatMovingAverageData($data) {
+  $res = '';
+  $php_formatted_data = json_decode($data['data'], true);
+  foreach($php_formatted_data['Technical Analysis: '.$data['data_type']] as $recorded_time_key=>$values) {
     $res .= '( \''.$php_formatted_data['Meta Data']['1: Symbol'];
     $res .= '\', \''.$php_formatted_data['Meta Data']['2: Indicator'];
     $res .= '\', \''.$php_formatted_data['Meta Data']['4: Interval'];
@@ -28,7 +30,7 @@ function formatSimpleMovingAverageData($data) {
     $res .= '\', \''.$php_formatted_data['Meta Data']['7: Time Zone'];
     $res .= '\', \''.$php_formatted_data['Meta Data']['3: Last Refreshed'];
     $res .= '\', \''.$recorded_time_key;
-    $res .= '\', '.$values['SMA'].'), ';
+    $res .= '\', '.$values[$data['data_type']].'), ';
   }
   $trimmed_res = rtrim($res,', ');
   return $trimmed_res;

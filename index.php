@@ -9,23 +9,32 @@ include(dirname(__FILE__) . '/dataFormatter/dataFormatter.php');
 
 // ADD desired securities and Alpha Vantage API functions here:
 $equity_securities = [
-  'MSFT' => [
+  [
+    'security' => 'MSFT',
     'function' => 'TIME_SERIES_INTRADAY',
     'outputsize' => 'full',
   ],
-  'MSFT' => [
+  [
+    'security' => 'MSFT',
     'function' => 'SMA',
     'outputsize' => 'full',
-    'time_period' => '10',
-    'series_type' => 'close', // can be open, close, high or low
+    'time_period' => '10', // Number of data points used to calculate each moving average value.
+    'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
+  ],
+  [
+    'security' => 'MSFT',
+    'function' => 'EMA',
+    'outputsize' => 'full',
+    'time_period' => '10', // Number of data points used to calculate each moving average value.
+    'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
   ]
 ];
 // Run api requests for each security
-foreach($equity_securities as $security => $api_params) {
-  $res['security'] = $security;
+foreach($equity_securities as $api_params) {
+  $res['security'] = $api_params['security'];
   $res['data_type'] = $api_params['function'];
   $res['output_size'] = $api_params['outputsize'];
-  $res['data'] = requestAVAPI($security, $api_params);
+  $res['data'] = requestAVAPI($res['security'], $api_params);
   // print_r($res['data']);
   $res['csv_formatted_data'] = formatData($res);
   insertToDb($res);
