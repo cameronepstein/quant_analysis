@@ -2,7 +2,7 @@
 function formatData($av_data) {
   if($av_data['data_type'] === 'TIME_SERIES_INTRADAY') {
     $res = formatTimeSeriesIntradayData($av_data['data']);
-  } else if ($av_data['data_type'] === 'SMA' || $av_data['data_type'] === 'EMA' || $av_data['data_type'] === 'WMA') {
+  } else if ($av_data['data_type'] === 'SMA' || $av_data['data_type'] === 'EMA' || $av_data['data_type'] === 'WMA' || $av_data['data_type'] === 'DEMA') {
     $res = formatMovingAverageData($av_data);
   }
   return $res;

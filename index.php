@@ -34,6 +34,13 @@ $equity_securities = [
     'outputsize' => 'full',
     'time_period' => '10', // Number of data points used to calculate each moving average value.
     'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
+  ],
+  [
+    'security' => 'MSFT',
+    'function' => 'DEMA',
+    'outputsize' => 'full',
+    'time_period' => '10', // Number of data points used to calculate each moving average value.
+    'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
   ]
 ];
 // Run api requests for each security
