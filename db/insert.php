@@ -14,7 +14,7 @@ function insertToDb($data) {
   }
   /* Create table doesn't return a resultset */
   if (mysqli_query($link, generateQuery($data)) === TRUE) {
-    print_r('Data Insert Complete: '.$data['security'].' / '.$data['data_type'].'<br>');
+    print_r($data['security'].' / '.$data['data_type'].' : '.date("Y-m-d H:i:s").'<br>');
   } else {
     print_r(mysqli_error($doj_db_con));
   }
