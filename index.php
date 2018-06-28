@@ -7,7 +7,13 @@ include(dirname(__FILE__) . '/dataFormatter/dataFormatter.php');
 // Set up project db
 // runDbSetup();
 
-// ADD desired securities and Alpha Vantage API functions here:
+/*
+ADD desired securities and Alpha Vantage API functions here:
+Securities $keys and $vals must stay in a specific order according to the AV api.
+
+See docs here: https://www.alphavantage.co/documentation/
+*/
+
 $equity_securities = [
   [
     'function' => 'TIME_SERIES_INTRADAY',
