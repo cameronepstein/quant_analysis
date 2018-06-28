@@ -16,6 +16,8 @@ See docs here: https://www.alphavantage.co/documentation/
 
 $equity_securities = [
   [
+  // NOTE: CHANGE THIS FUNCTIONS TIME SERIES INTRADAY KEY IN THE formatTimeSeriesIntradayData($data) function.
+  // IT INCLUDRS (1min) in the key name and would not work if the interval time was changed here
     'function' => 'TIME_SERIES_INTRADAY',
     'symbol' => 'MSFT',
     'interval' => '1min',
@@ -85,12 +87,24 @@ $equity_securities = [
     'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
     'db_table' => 'moving_averages' // NOT PART OF THE AV API. For project insert queries
   ],
+  [
+    'function' => 'MACD',
+    'symbol' => 'MSFT',
+    'interval' => '1min',
+    'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
+    'fastperiod' => '12',
+    'slowperiod' => '26',
+    'signalperiod' => '9',
+    'db_table' => 'moving_average_convergence_divergence' // NOT PART OF THE AV API. For project insert queries
+  ],
 ];
 // Run api requests for each security
 foreach($equity_securities as $api_params) {
   $res['security'] = $api_params['symbol'];
   $res['data_type'] = $api_params['function'];
-  $res['output_size'] = $api_params['outputsize'];
+  if (isset($api_params['outputsize'])) {
+    $res['output_size'] = $api_params['outputsize'];
+  }
   $res['db_table'] = $api_params['db_table'];
   $res['data'] = requestAVAPI($api_params);
   // print_r($res['data']);

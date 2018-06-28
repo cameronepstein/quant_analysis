@@ -4,8 +4,32 @@ function formatData($av_data) {
     $res = formatTimeSeriesIntradayData($av_data['data']);
   } else if ($av_data['db_table'] === 'moving_averages') {
     $res = formatMovingAverageData($av_data);
+  } else if ($av_data['db_table'] === 'moving_average_convergence_divergence') {
+    $res = formatMACDData($av_data);
   }
   return $res;
+}
+
+function formatMACDData($data) {
+  $res = '';
+  $php_formatted_data = json_decode($data['data'], true);
+  foreach($php_formatted_data['Technical Analysis: MACD'] as $recorded_time_key=>$values) {
+    $res .= '( \''.$php_formatted_data['Meta Data']['1: Symbol'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['2: Indicator'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['4: Interval'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['5.1: Fast Period'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['5.2: Slow Period'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['5.3: Signal Period'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['6: Series Type'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['7: Time Zone'];
+    $res .= '\', \''.$recorded_time_key;
+    $res .= '\', \''.$values['MACD_Signal'];
+    $res .= '\', \''.$values['MACD_Hist'];
+    $res .= '\', \''.$values['MACD'];
+    $res .= '\', \''.$php_formatted_data['Meta Data']['3: Last Refreshed'].'\'), ';
+  }
+  $trimmed_res = rtrim($res,', ');
+  return $trimmed_res;
 }
 
 function formatTimeSeriesIntradayData($data) {
