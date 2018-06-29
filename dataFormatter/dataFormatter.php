@@ -8,8 +8,37 @@ function formatData($av_data) {
     $res = formatMACDData($av_data);
   } else if ($av_data['db_table'] === 'moving_average_convergence_divergence_ext') {
     $res = formatMACDEXTData($av_data);
+  } else if ($av_data['db_table'] === 'STOCH') {
+    $res = formatSTOCHData($av_data);
   }
   return $res;
+}
+
+function formatSTOCHData($data) {
+  $res = '';
+  $php_formatted_data = json_decode($data['data'], true);
+  foreach($php_formatted_data['Technical Analysis: '.$data['db_table']] as $date=>$av_values) {
+    $count = 0;
+    $date_count = 0;
+    foreach($php_formatted_data['Meta Data'] as $key=>$val) {
+      if ($count === 0) {
+        $res .= '( \''.$val;
+      } else {
+        $res .= '\', \''.$val;
+      }
+      $count += 1;
+    }
+    foreach($av_values as $key=>$val) {
+      if ($date_count === 0) {
+        $res .= '\', \''.$date;
+      }
+      $res .= '\', \''.$val;
+      $date_count += 1;
+    }
+    $res .='\'), ';
+  }
+  $trimmed_res = rtrim($res,', ');
+  return $trimmed_res;
 }
 
 function formatMACDEXTData($data) {

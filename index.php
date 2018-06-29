@@ -110,6 +110,17 @@ $equity_securities = [
     'signalmatype' => '0', // See above comment
     'db_table' => 'moving_average_convergence_divergence_ext' // NOT PART OF THE AV API. For project insert queries
   ],
+  [
+    'function' => 'STOCH',
+    'symbol' => 'MSFT',
+    'interval' => '1min',
+    'fastkperiod' => '5', // The time period of the fastk moving average. Positive integers are accepted. By default,
+    'slowkperiod' => '3',
+    'slowdperiod' => '3', // The time period of the slowd moving average. Positive integers are accepted. By default,
+    'slowkmatype' => '0', // Moving average type for the slowk moving average. Integers 0 - 8 are accepted with the following mappings. 0 = Simple Moving Average (SMA), 1 = Exponential Moving Average (EMA), 2 = Weighted Moving Average (WMA), 3 = Double Exponential Moving Average (DEMA), 4 = Triple Exponential Moving Average (TEMA), 5 = Triangular Moving Average (TRIMA), 6 = T3 Moving Average, 7 = Kaufman Adaptive Moving Average (KAMA), 8 = MESA Adaptive Moving Average (MAMA).
+    'slowdmatype' => '0', // See above comment
+    'db_table' => 'STOCH' // NOT PART OF THE AV API. For project insert queries
+  ],
 ];
 // Run api requests for each security
 foreach($equity_securities as $api_params) {
