@@ -5,7 +5,9 @@ function generateQuery($data) {
   } else if ($data['db_table'] === 'moving_averages') {
     $query = 'INSERT INTO c_test.moving_averages (security, technical_indicator, time_interval, time_period, series_type, time_zone, last_refreshed, recorded_time, value) VALUES'.$data['csv_formatted_data'].'ON DUPLICATE KEY UPDATE value=value';
   } else if ($data['db_table'] === 'moving_average_convergence_divergence') {
-    $query = 'INSERT INTO c_test.moving_average_convergence_divergence (symbol, indicator, time_interval, fast_period, slow_period, signal_period, series_type, time_zone, recorded_time, MACD_signal, MACD_hist, MACD, last_refreshed) VALUES '.$data['csv_formatted_data'].' ON DUPLICATE KEY UPDATE MACD_signal=MACD_signal, MACD_hist=MACD_hist, MACD=MACD';
+    $query = 'INSERT INTO c_test.MACD (symbol, indicator, time_interval, fast_period, slow_period, signal_period, series_type, time_zone, recorded_time, MACD_signal, MACD_hist, MACD, last_refreshed) VALUES '.$data['csv_formatted_data'].' ON DUPLICATE KEY UPDATE MACD_signal=MACD_signal, MACD_hist=MACD_hist, MACD=MACD';
+  } else if ($data['db_table'] === 'moving_average_convergence_divergence_ext') {
+    $query = 'INSERT INTO c_test.MACDEXT (symbol, indicator, time_interval, fast_period, slow_period, signal_period, fast_ma_type, slow_ma_type, signal_ma_type, series_type, time_zone, recorded_time, MACD_signal, MACD_hist, MACD, last_refreshed) VALUES '.$data['csv_formatted_data'].' ON DUPLICATE KEY UPDATE MACD_signal=MACD_signal, MACD_hist=MACD_hist, MACD=MACD';
   }
   return $query;
 }

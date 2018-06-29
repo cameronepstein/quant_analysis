@@ -97,6 +97,19 @@ $equity_securities = [
     'signalperiod' => '9',
     'db_table' => 'moving_average_convergence_divergence' // NOT PART OF THE AV API. For project insert queries
   ],
+  [
+    'function' => 'MACDEXT',
+    'symbol' => 'MSFT',
+    'interval' => '1min',
+    'series_type' => 'close', // The desired price type in the time series. Four types are supported: can be open, close, high or low
+    'fastperiod' => '12',
+    'slowperiod' => '26',
+    'signalperiod' => '9',
+    'fastmatype' => '0', // Moving average type for the faster moving average. Integers 0 - 8 are accepted with the following mappings. 0 = Simple Moving Average (SMA), 1 = Exponential Moving Average (EMA), 2 = Weighted Moving Average (WMA), 3 = Double Exponential Moving Average (DEMA), 4 = Triple Exponential Moving Average (TEMA), 5 = Triangular Moving Average (TRIMA), 6 = T3 Moving Average, 7 = Kaufman Adaptive Moving Average (KAMA), 8 = MESA Adaptive Moving Average (MAMA).
+    'slowmatype' => '0', // See above comment
+    'signalmatype' => '0', // See above comment
+    'db_table' => 'moving_average_convergence_divergence_ext' // NOT PART OF THE AV API. For project insert queries
+  ],
 ];
 // Run api requests for each security
 foreach($equity_securities as $api_params) {
